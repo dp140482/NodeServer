@@ -1,25 +1,28 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const handlers = require("./handlers");
+import express from 'express';
+import cors from 'cors';
+import {getIndex, makeDB} from './handlers.js';
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
 
-// const path = __dirname + "/db/";
+const app = express();
+// const __dirname = dirname(fileURLToPath(import.meta.url));// без этого __dirname не работает в ESM
+// const path = __dirname + '/db/';
 
 app.use(express.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    if (req.method === "OPTIONS") {
-      res.header(("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"));
-      return res.status(200).json({});
-    }
-    next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") {
+    res.header(("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"));
+    return res.status(200).json({});
+  }
+  next();
 });
 
-app.get("/", handlers.getIndex);
-app.get("/makeDB", handlers.makeDB);
+app.get("/", getIndex);
+app.get("/makeDB", makeDB);
 
 /*
 app.get("/get/:date", (req, res) => {
