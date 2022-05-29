@@ -41,10 +41,35 @@ export const getVideos = (req, response) => {
   );
 };
 
+export const getSerials = (_, response) => {
+  db.all(
+    `SELECT * FROM serials ORDER BY rating DESC`,
+    (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    }
+  );
+};
+
 export const onGetFilms = (req, response) => {
   const recvd = req.body;
   if (recvd.order === 'rating') sGetFilmsByRating(response, recvd);
   if (recvd.order === 'newest') sGetFilmsByAdding(response, recvd);
+};
+
+export const getVideoContent = (_, response) => {
+  db.all(
+    `SELECT id, image, route, title, rating, agelimit FROM films
+    UNION
+    SELECT id, image, route, title, rating, agelimit FROM videos
+    UNION
+    SELECT id, image, route, title, rating, agelimit FROM serials
+    ORDER BY rating DESC`,
+    (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    }
+  );
 };
 
 export const postComment = (req, response) => {

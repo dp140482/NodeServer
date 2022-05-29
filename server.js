@@ -5,6 +5,8 @@ import {
   getPerson,
   onGetFilms,
   getVideos,
+  getSerials,
+  getVideoContent,
   postComment,
   getComments
 } from './handlers.js';
@@ -29,10 +31,10 @@ app.use((req, res, next) => {
 });
 
 app.get("/", getIndex);
-app.post("/get-videocontent", () => {});
+app.get("/get-videocontent", getVideoContent);
 app.post("/get-films", onGetFilms);
 app.post("/get-videos", getVideos);
-app.post("/get-serials", () => {});
+app.get("/get-serials", getSerials);
 app.get("/get-videocontent-info/:route", () => {});
 app.post("/get-episodes", () => {});
 app.get("/get-person/:route", getPerson);
