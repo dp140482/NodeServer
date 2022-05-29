@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {getIndex, makeDB} from './handlers.js';
+import {getIndex, getPerson, onGetFilms} from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 
@@ -23,12 +23,14 @@ app.use((req, res, next) => {
 
 app.get("/", getIndex);
 app.post("/get-videocontent", () => {});
-app.post("/get-films", () => {});
+app.post("/get-films", onGetFilms);
 app.post("/get-videos", () => {});
 app.post("/get-serials", () => {});
-app.get("/get-info/:route", () => {});
+app.get("/get-videocontent-info/:route", () => {});
 app.post("/get-episodes", () => {});
+app.get("/get-person/:route", getPerson);
 app.get("/get-comments/:route", () => {});
+app.post("/post-comment", () => {});
 app.get("/refresh-rating/:route", () => {});
 app.post("/login", () => {});
 app.get("/logout", () => {});
