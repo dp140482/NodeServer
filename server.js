@@ -1,6 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import {getIndex, getPerson, onGetFilms, getVideos} from './handlers.js';
+import {
+  getIndex,
+  getPerson,
+  onGetFilms,
+  getVideos,
+  postComment,
+  getComments
+} from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 
@@ -29,8 +36,8 @@ app.post("/get-serials", () => {});
 app.get("/get-videocontent-info/:route", () => {});
 app.post("/get-episodes", () => {});
 app.get("/get-person/:route", getPerson);
-app.get("/get-comments/:route", () => {});
-app.post("/post-comment", () => {});
+app.get("/get-comments/:route", getComments);
+app.post("/post-comment", postComment);
 app.get("/refresh-rating/:route", () => {});
 app.post("/login", () => {});
 app.get("/logout", () => {});

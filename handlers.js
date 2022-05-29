@@ -46,3 +46,24 @@ export const onGetFilms = (req, response) => {
   if (recvd.order === 'rating') sGetFilmsByRating(response, recvd);
   if (recvd.order === 'newest') sGetFilmsByAdding(response, recvd);
 };
+
+export const postComment = (req, response) => {
+  const query = `INSERT INTO comments (film_route, username, message, datetime) VALUES (\'${ req.body.route }\', \'${ req.body.username }\', \'${ req.body.message }\', \'${ req.body.datetime }\');`;
+  db.all( query,
+    (err) => {
+      handleErrors(err);
+      response.send({"recieved": "ok"});
+    }
+  );
+};
+
+export const  getComments = (req, response) => {
+  console.log(req.params.route);
+  db.all(
+    `SELECT * FROM comments WHERE film_route = ?`, req.params.route,
+    (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    }
+  );
+};

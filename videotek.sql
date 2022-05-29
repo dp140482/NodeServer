@@ -97,7 +97,7 @@ ON film_actor (film_id, person_id);
 DROP TABLE IF EXISTS comments;
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    film_id INTEGER NOT NULL,
+    film_route TEXT NOT NULL,
     username TEXT NOT NULL,
     message TEXT,
     datetime TEXT
