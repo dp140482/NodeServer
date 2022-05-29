@@ -30,6 +30,17 @@ export const getPerson = (req, response) => {
   );
 };
 
+export const getVideos = (req, response) => {
+  db.all(
+    `SELECT * FROM videos ORDER BY rating DESC LIMIT ?`,
+    req.params.arrayLength ? req.params.arrayLength : 12,
+    (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    }
+  );
+};
+
 export const onGetFilms = (req, response) => {
   const recvd = req.body;
   if (recvd.order === 'rating') sGetFilmsByRating(response, recvd);

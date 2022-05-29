@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {getIndex, getPerson, onGetFilms} from './handlers.js';
+import {getIndex, getPerson, onGetFilms, getVideos} from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.get("/", getIndex);
 app.post("/get-videocontent", () => {});
 app.post("/get-films", onGetFilms);
-app.post("/get-videos", () => {});
+app.post("/get-videos", getVideos);
 app.post("/get-serials", () => {});
 app.get("/get-videocontent-info/:route", () => {});
 app.post("/get-episodes", () => {});
