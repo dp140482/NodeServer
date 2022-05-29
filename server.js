@@ -22,22 +22,17 @@ app.use((req, res, next) => {
 });
 
 app.get("/", getIndex);
-app.get("/makeDB", makeDB);
-
-/*
-app.get("/get/:date", (req, res) => {
-  handler(req, res, {todo: "get", path});
-});
-app.get("/save/:date", (req, res) => {
-  handler(req, res, {todo: "save", path, htmlPath: html});
-});
-app.put("/set/:date", (req, res) => {
-  handler(req, res, {todo: "set", path});
-});
-app.post("/add/:date", (req, res) => {
-  handler(req, res, {todo: "add", path});
-});
-*/
+app.post("/get-videocontent", () => {});
+app.post("/get-films", () => {});
+app.post("/get-videos", () => {});
+app.post("/get-serials", () => {});
+app.get("/get-info/:route", () => {});
+app.post("/get-episodes", () => {});
+app.get("/get-comments/:route", () => {});
+app.get("/refresh-rating/:route", () => {});
+app.post("/login", () => {});
+app.get("/logout", () => {});
+app.post("/signin", () => {});
 
 const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Сервер работает на порту ${port}...`));
