@@ -1,6 +1,5 @@
 import fs from 'fs';
 import {db} from './db.js';
-import { sGetFilmsByRating, sGetFilmsByAdding } from './services.js';
 // import {createDatabase} from './mutations.js'
 
 export const getIndex = (_, res) => {
@@ -32,7 +31,10 @@ export const getPerson = (req, response) => {
 
 export const getVideos = (req, response) => {
   db.all(
-    `SELECT * FROM videos ORDER BY rating DESC LIMIT ?`,
+    `SELECT image, route, title, rating, agelimit
+    FROM videos
+    ORDER BY rating DESC
+    LIMIT ?`,
     req.params.arrayLength ? req.params.arrayLength : 12,
     (err, rows) => {
       handleErrors(err);
@@ -43,7 +45,9 @@ export const getVideos = (req, response) => {
 
 export const getSerials = (_, response) => {
   db.all(
-    `SELECT * FROM serials ORDER BY rating DESC`,
+    `SELECT image, route, title, rating, agelimit
+    FROM serials
+    ORDER BY rating DESC`,
     (err, rows) => {
       handleErrors(err);
       response.send(rows);
@@ -52,18 +56,29 @@ export const getSerials = (_, response) => {
 };
 
 export const onGetFilms = (req, response) => {
-  const recvd = req.body;
-  if (recvd.order === 'rating') sGetFilmsByRating(response, recvd);
-  if (recvd.order === 'newest') sGetFilmsByAdding(response, recvd);
+  const order = req.body.order;
+  let criterium = order ? order : "rating";
+  if (order === "newest") criterium = "add_at";
+  let query = `SELECT image, route, title, rating, agelimit
+  FROM films ORDER BY ${ criterium } DESC`;
+  if (req.body.arrayLength && req.body.arrayLength > 0) {
+    query +=  ` LIMIT ${ req.body.arrayLength };`;
+  } else {
+    query += ';';
+  }
+  db.all(query, (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+  });
 };
 
 export const getVideoContent = (_, response) => {
   db.all(
-    `SELECT id, image, route, title, rating, agelimit FROM films
+    `SELECT image, route, title, rating, agelimit FROM films
     UNION
-    SELECT id, image, route, title, rating, agelimit FROM videos
+    SELECT image, route, title, rating, agelimit FROM videos
     UNION
-    SELECT id, image, route, title, rating, agelimit FROM serials
+    SELECT image, route, title, rating, agelimit FROM serials
     ORDER BY rating DESC`,
     (err, rows) => {
       handleErrors(err);
