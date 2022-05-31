@@ -8,7 +8,8 @@ import {
   getSerials,
   getVideoContent,
   postComment,
-  getComments
+  getComments,
+  getImage
 } from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", getIndex);
+app.get("/images/:file", getImage)
 app.get("/get-videocontent", getVideoContent);
 app.post("/get-films", onGetFilms);
 app.post("/get-videos", getVideos);

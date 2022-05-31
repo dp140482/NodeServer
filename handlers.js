@@ -98,7 +98,6 @@ export const postComment = (req, response) => {
 };
 
 export const  getComments = (req, response) => {
-  console.log(req.params.route);
   db.all(
     `SELECT * FROM comments WHERE film_route = ?`, req.params.route,
     (err, rows) => {
@@ -106,4 +105,16 @@ export const  getComments = (req, response) => {
       response.send(rows);
     }
   );
+};
+
+export const  getImage = (req, response) => {
+    const filePath = './media/' + req.params.file;
+    fs.access(filePath, fs.constants.R_OK, (err) => {
+      if (err) {
+        response.statusCode = 404;
+        response.end('File not found');
+      } else {
+        fs.createReadStream(filePath).pipe(response);
+      }
+    })
 };
