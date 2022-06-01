@@ -3,7 +3,7 @@ import cors from 'cors';
 import {
   getIndex,
   getPerson,
-  onGetFilms,
+  getFilms,
   getVideos,
   getSerials,
   getVideoContent,
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 app.get("/", getIndex);
 app.get("/images/:file", getImage)
 app.get("/get-videocontent", getVideoContent);
-app.post("/get-films", onGetFilms);
+app.post("/get-films", getFilms);
 app.post("/get-videos", getVideos);
 app.get("/get-serials", getSerials);
 app.get("/get-videocontent-info/:route", () => {});

@@ -55,7 +55,7 @@ export const getSerials = (_, response) => {
   );
 };
 
-export const onGetFilms = (req, response) => {
+export const getFilms = (req, response) => {
   const order = req.body.order;
   let criterium = order ? order : "rating";
   if (order === "newest") criterium = "add_at";
