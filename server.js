@@ -9,7 +9,8 @@ import {
   getVideoContent,
   postComment,
   getComments,
-  getImage
+  getImage,
+  getInfo
 } from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
@@ -37,7 +38,7 @@ app.get("/get-videocontent", getVideoContent);
 app.post("/get-films", getFilms);
 app.post("/get-videos", getVideos);
 app.get("/get-serials", getSerials);
-app.get("/get-videocontent-info/:route", () => {});
+app.get("/get-videocontent-info/:route", getInfo);
 app.post("/get-episodes", () => {});
 app.get("/get-person/:route", getPerson);
 app.get("/get-comments/:route", getComments);

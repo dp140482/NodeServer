@@ -118,3 +118,32 @@ export const  getImage = (req, response) => {
       }
     })
 };
+
+export const  getInfo = (req, response) => {
+  const route = req.params.route;
+  const filmQuery =  `SELECT * FROM films WHERE route = \"${ route }\"`;
+  db.get(filmQuery, (err, rows) => {
+      handleErrors(err);
+      if (rows) {
+        response.send({...rows, type: "film" });
+      } else {
+        const serialQuery =  `SELECT * FROM serials WHERE route = \"${ route }\"`;
+        db.get(serialQuery, (err, rows) => {
+          handleErrors(err);
+          if (rows) {
+            response.send({...rows, type: "serial"});
+          } else {
+            const videoQuery =  `SELECT * FROM videos WHERE route = \"${ route }\"`;
+            db.get(videoQuery, (err, rows) => {
+              handleErrors(err);
+              if (rows) {
+                response.send({...rows, type: "video" });
+              } else {
+                response.send(undefined);
+              }
+            });
+          }
+        });
+      }
+  });
+};
