@@ -1,5 +1,6 @@
 import fs from 'fs';
 import {db} from './db.js';
+import date from 'date-and-time';
 // import {createDatabase} from './mutations.js'
 
 export const getIndex = (_, res) => {
@@ -87,8 +88,20 @@ export const getVideoContent = (_, response) => {
   );
 };
 
+function textReplacer(text) {
+  return text
+    .replace(/\.\.\./g, '…')
+    .replace(/(^)\x22(\s)/g, '$1»$2')
+    .replace(/(^|\s|\()"/g, '$1«')
+    .replace(/"(;|!|\?|:|\.|…|,|$|\)|\{|\s)/g, '»$1')
+    .replace(/(?<!»,) - /g, ' — ')
+    .replace(/(«[^»]*)«([^»]*)»/g, '$1„$2“')
+};
+
 export const postComment = (req, response) => {
-  const query = `INSERT INTO comments (film_route, username, message, datetime) VALUES (\'${ req.body.route }\', \'${ req.body.username }\', \'${ req.body.message }\', \'${ req.body.datetime }\');`;
+  const comment = textReplacer(req.body.message);
+  const dt = date.format(new Date(), 'DD.MM.YYYY HH:mm');
+  const query = `INSERT INTO comments (film_route, username, message, datetime) VALUES (\'${ req.body.route }\', \'${ req.body.username }\', \'${ comment }\', \'${ dt }\');`;
   db.all( query,
     (err) => {
       handleErrors(err);
@@ -145,5 +158,21 @@ export const  getInfo = (req, response) => {
           }
         });
       }
+  });
+};
+
+export const  getGenres = (_, response) => {
+  db.all(`SELECT * FROM genres WHERE id IN
+  (SELECT DISTINCT genre_id FROM film_genre ORDER BY genre_id ASC)
+  UNION
+  SELECT * FROM genres WHERE id = 0`,
+  (err, rows) => {
+    handleErrors(err);
+    if (rows) {
+      const array = []
+      rows.forEach(row => array.push(row.genre))
+      response.send(array);
+    }
+    response.send(rows);
   });
 };

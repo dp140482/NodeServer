@@ -10,7 +10,8 @@ import {
   postComment,
   getComments,
   getImage,
-  getInfo
+  getInfo,
+  getGenres
 } from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
@@ -32,21 +33,23 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", getIndex);
-app.get("/images/:file", getImage)
-app.get("/get-videocontent", getVideoContent);
-app.post("/get-films", getFilms);
-app.post("/get-videos", getVideos);
-app.get("/get-serials", getSerials);
+app.get("/", getIndex); // -- Вернуть  index.html (фронт)
+app.get("/images/:file", getImage) // -- Вернуть картинку из папки media по имени файла
+app.get("/get-videocontent", getVideoContent); // -- Вернуть все фильмы, сериалы и видео
+app.post("/get-films", getFilms); // -- Вернуть первые arrayLength фильмов в порядке order
+app.post("/get-videos", getVideos); // -- Вернуть первые arrayLength видео в порядке order
+app.get("/get-serials", getSerials); // -- Вернуть все сериалы
+app.get("/get-genres", getGenres); // -- Вернуть все используемые жанры
+/* Вернуть подробную информацию о фильме, сериале или видео: */
 app.get("/get-videocontent-info/:route", getInfo);
-app.post("/get-episodes", () => {});
-app.get("/get-person/:route", getPerson);
-app.get("/get-comments/:route", getComments);
-app.post("/post-comment", postComment);
-app.get("/refresh-rating/:route", () => {});
-app.post("/login", () => {});
-app.get("/logout", () => {});
-app.post("/signin", () => {});
+app.post("/get-episodes", () => {}); // -- Вернуть список эпизодов сезона сериала
+app.get("/get-person/:route", getPerson); // -- Вернуть подробную информацию о человеке
+app.get("/get-comments/:route", getComments); // -- Вернуть список комментариев
+app.post("/post-comment", postComment); // -- Отправить комментарий
+app.get("/refresh-rating/:route", () => {}); // -- Обновить рейтинг фильма
+app.post("/login", () => {}); // -- Вход пользователя
+app.get("/logout", () => {}); // -- Выход зарегистрированного
+app.post("/signin", () => {}); // -- Регистрация пользователя
 
 const port = process.env.PORT || 3003;
-app.listen(port, () => console.log(`Сервер работает на порту ${port}...`));
+app.listen(port, () => console.log(`Сервер работает на порте ${port}...`));
