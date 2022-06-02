@@ -165,8 +165,7 @@ export const  getGenres = (_, response) => {
   db.all(`SELECT * FROM genres WHERE id IN
   (SELECT DISTINCT genre_id FROM film_genre ORDER BY genre_id ASC)
   UNION
-  SELECT * FROM genres WHERE id = 0`,
-  (err, rows) => {
+  SELECT * FROM genres WHERE id = 0`, (err, rows) => {
     handleErrors(err);
     if (rows) {
       const array = []
@@ -177,3 +176,19 @@ export const  getGenres = (_, response) => {
     }
   });
 };
+
+export const  getFilmGenres = (req, response) => {
+  db.all(`SELECT genre FROM genres WHERE id IN
+    (SELECT genre_id FROM film_genre
+    WHERE route = \"${ req.params.route }\")`, (err, rows) => {
+    handleErrors(err);
+    if (rows) {
+      const array = []
+      rows.forEach(row => array.push(row.genre))
+      response.send(array);
+    } else {
+      response.send(rows);
+    }
+  });
+};
+

@@ -61,10 +61,9 @@ CREATE TABLE genres (
 
 DROP TABLE IF EXISTS film_genre;
 CREATE TABLE film_genre (
-    film_id INTEGER NOT NULL,
+    route TEXT NOT NULL,
     genre_id INTEGER NOT NULL
 );
-CREATE INDEX film_genre_index ON film_genre (film_id, genre_id);
 
 DROP TABLE IF EXISTS persona;
 CREATE TABLE persona (
@@ -81,19 +80,15 @@ CREATE TABLE persona (
 
 DROP TABLE IF EXISTS film_director;
 CREATE TABLE film_director (
-    film_id INTEGER NOT NULL,
+    film_route TEXT NOT NULL,
     person_id INTEGER NOT NULL
 );
-CREATE INDEX film_director_index
-ON film_director (film_id, person_id);
 
 DROP TABLE IF EXISTS film_actor;
 CREATE TABLE film_actor (
-    film_id INTEGER NOT NULL,
+    film_route TEXT NOT NULL,
     person_id INTEGER NOT NULL
 );
-CREATE INDEX film_actor_index
-ON film_actor (film_id, person_id);
 
 DROP TABLE IF EXISTS comments;
 CREATE TABLE comments (
@@ -172,7 +167,7 @@ INSERT INTO genres (id, genre) VALUES (5, 'Семейный');
 INSERT INTO genres (id, genre) VALUES (6, 'Драма');
 INSERT INTO genres (id, genre) VALUES (7, 'Мелодрама');
 INSERT INTO genres (id, genre) VALUES (8, 'Триллер');
-INSERT INTO genres (id, genre) VALUES (9, 'Биографический');
+INSERT INTO genres (id, genre) VALUES (9, 'Биография');
 INSERT INTO genres (id, genre) VALUES (10, 'Комедия');
 INSERT INTO genres (id, genre) VALUES (11, 'Ужасы');
 INSERT INTO genres (id, genre) VALUES (12, 'Мультфильм');
@@ -188,79 +183,38 @@ INSERT INTO genres (id, genre) VALUES (21, 'Спортивный');
 INSERT INTO genres (id, genre) VALUES (22, 'Короткометражный');
 INSERT INTO genres (id, genre) VALUES (23, 'Музыкальный');
 INSERT INTO genres (id, genre) VALUES (24, 'Мюзикл');
+INSERT INTO genres (id, genre) VALUES (25, 'Фильм-катастрофа');
+INSERT INTO genres (id, genre) VALUES (26, 'Медицинский');
 
-INSERT INTO film_genre (film_id, genre_id) VALUES (1, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (1, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (2, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (2, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (2, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (3, 2);
-INSERT INTO film_genre (film_id, genre_id) VALUES (3, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (3, 5);
-INSERT INTO film_genre (film_id, genre_id) VALUES (4, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (4, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (4, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (4, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (5, 2);
-INSERT INTO film_genre (film_id, genre_id) VALUES (5, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (5, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (5, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (5, 7);
-INSERT INTO film_genre (film_id, genre_id) VALUES (6, 2);
-INSERT INTO film_genre (film_id, genre_id) VALUES (6, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (6, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (6, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (7, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (7, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (7, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (7, 8);
-INSERT INTO film_genre (film_id, genre_id) VALUES (7, 9);
-INSERT INTO film_genre (film_id, genre_id) VALUES (8, 9);
-INSERT INTO film_genre (film_id, genre_id) VALUES (9, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (9, 13);
-INSERT INTO film_genre (film_id, genre_id) VALUES (11, 18);
-INSERT INTO film_genre (film_id, genre_id) VALUES (11, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (12, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (12, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (12, 7);
-INSERT INTO film_genre (film_id, genre_id) VALUES (12, 10);
-INSERT INTO film_genre (film_id, genre_id) VALUES (13, 11);
-INSERT INTO film_genre (film_id, genre_id) VALUES (13, 13);
-INSERT INTO film_genre (film_id, genre_id) VALUES (14, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (14, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (15, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (15, 5);
-INSERT INTO film_genre (film_id, genre_id) VALUES (15, 12);
-INSERT INTO film_genre (film_id, genre_id) VALUES (15, 10);
-INSERT INTO film_genre (film_id, genre_id) VALUES (15, 24);
-INSERT INTO film_genre (film_id, genre_id) VALUES (16, 16);
-INSERT INTO film_genre (film_id, genre_id) VALUES (16, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (17, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (17, 8);
-INSERT INTO film_genre (film_id, genre_id) VALUES (17, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (18, 2);
-INSERT INTO film_genre (film_id, genre_id) VALUES (18, 4);
-INSERT INTO film_genre (film_id, genre_id) VALUES (18, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (19, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (19, 2);
-INSERT INTO film_genre (film_id, genre_id) VALUES (19, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (19, 10);
-INSERT INTO film_genre (film_id, genre_id) VALUES (20, 1);
-INSERT INTO film_genre (film_id, genre_id) VALUES (20, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (20, 8);
-INSERT INTO film_genre (film_id, genre_id) VALUES (20, 18);
-INSERT INTO film_genre (film_id, genre_id) VALUES (21, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (22, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (22, 8);
-INSERT INTO film_genre (film_id, genre_id) VALUES (22, 10);
-INSERT INTO film_genre (film_id, genre_id) VALUES (22, 18);
-INSERT INTO film_genre (film_id, genre_id) VALUES (23, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (23, 9);
-INSERT INTO film_genre (film_id, genre_id) VALUES (24, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (25, 2);
-INSERT INTO film_genre (film_id, genre_id) VALUES (25, 3);
-INSERT INTO film_genre (film_id, genre_id) VALUES (25, 7);
-INSERT INTO film_genre (film_id, genre_id) VALUES (25, 10);
-INSERT INTO film_genre (film_id, genre_id) VALUES (26, 8);
-INSERT INTO film_genre (film_id, genre_id) VALUES (26, 6);
-INSERT INTO film_genre (film_id, genre_id) VALUES (26, 14);
+INSERT INTO film_genre (route, genre_id) VALUES ('matrix', 1);
+INSERT INTO film_genre (route, genre_id) VALUES ('matrix', 3);
+INSERT INTO film_genre (route, genre_id) VALUES ('matrix-reborn', 1);
+INSERT INTO film_genre (route, genre_id) VALUES ('matrix-reborn', 3);
+INSERT INTO film_genre (route, genre_id) VALUES ('spiderman', 1);
+INSERT INTO film_genre (route, genre_id) VALUES ('spiderman', 3);
+INSERT INTO film_genre (route, genre_id) VALUES ('spiderman', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('spiderman', 20);
+INSERT INTO film_genre (route, genre_id) VALUES ('hurrypotter_azkaban', 2);
+INSERT INTO film_genre (route, genre_id) VALUES ('hurrypotter_azkaban', 4);
+INSERT INTO film_genre (route, genre_id) VALUES ('avatar', 1);
+INSERT INTO film_genre (route, genre_id) VALUES ('avatar', 3);
+INSERT INTO film_genre (route, genre_id) VALUES ('avatar', 4);
+INSERT INTO film_genre (route, genre_id) VALUES ('avatar', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('snowwhite_hunter', 2);
+INSERT INTO film_genre (route, genre_id) VALUES ('snowwhite_hunter', 3);
+INSERT INTO film_genre (route, genre_id) VALUES ('snowwhite_hunter', 4);
+INSERT INTO film_genre (route, genre_id) VALUES ('snowwhite_hunter', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('everest', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('everest', 8);
+INSERT INTO film_genre (route, genre_id) VALUES ('everest', 25);
+INSERT INTO film_genre (route, genre_id) VALUES ('kriminalnoe-chtivo', 10);
+INSERT INTO film_genre (route, genre_id) VALUES ('kriminalnoe-chtivo', 18);
+INSERT INTO film_genre (route, genre_id) VALUES ('jackie', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('jackie', 9);
+INSERT INTO film_genre (route, genre_id) VALUES ('hurtlocker', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('hurtlocker', 14);
+INSERT INTO film_genre (route, genre_id) VALUES ('game_of_thrones', 2);
+INSERT INTO film_genre (route, genre_id) VALUES ('game_of_thrones', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('game_of_thrones', 4);
+INSERT INTO film_genre (route, genre_id) VALUES ('doctor_house', 6);
+INSERT INTO film_genre (route, genre_id) VALUES ('doctor_house', 26);

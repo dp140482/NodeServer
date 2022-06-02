@@ -11,7 +11,8 @@ import {
   getComments,
   getImage,
   getInfo,
-  getGenres
+  getGenres,
+  getFilmGenres
 } from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
@@ -40,6 +41,7 @@ app.post("/get-films", getFilms); // -- Вернуть первые arrayLength 
 app.post("/get-videos", getVideos); // -- Вернуть первые arrayLength видео в порядке order
 app.get("/get-serials", getSerials); // -- Вернуть все сериалы
 app.get("/get-genres", getGenres); // -- Вернуть все используемые жанры
+app.get("/get-genres/:route", getFilmGenres); // -- Вернуть все жанры видеозаписи
 /* Вернуть подробную информацию о фильме, сериале или видео: */
 app.get("/get-videocontent-info/:route", getInfo);
 app.post("/get-episodes", () => {}); // -- Вернуть список эпизодов сезона сериала
