@@ -15,12 +15,8 @@ import {
   getFilmGenres,
   getNumOfFilms
 } from './handlers.js';
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
 
 const app = express();
-// const __dirname = dirname(fileURLToPath(import.meta.url));// без этого __dirname не работает в ESM
-// const path = __dirname + '/db/';
 
 app.use(express.json());
 app.use(cors());

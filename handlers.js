@@ -68,10 +68,20 @@ export const getFilms = (req, response) => {
     } else {
       query += ';';
     }
+  } else if (!req.body.sort) {
+    query = `SELECT image, route, title, rating, agelimit FROM
+    (SELECT * FROM
+      (SELECT * FROM films
+        ORDER BY ${ criterium }
+        DESC LIMIT ${ req.body.arrayLength * req.body.page })
+    ORDER BY ${ criterium } ASC LIMIT ${ req.body.arrayLength })
+    ORDER BY ${ criterium } DESC;`;
   } else {
     query = `SELECT image, route, title, rating, agelimit FROM
     (SELECT * FROM
       (SELECT * FROM films
+        WHERE route IN
+          (SELECT route FROM film_genre WHERE genre_id = \"${ req.body.sort }\")
         ORDER BY ${ criterium }
         DESC LIMIT ${ req.body.arrayLength * req.body.page })
     ORDER BY ${ criterium } ASC LIMIT ${ req.body.arrayLength })
@@ -170,24 +180,6 @@ export const getInfo = (req, response) => {
       }
   });
 };
-
-/*
-export const  getGenres = (_, response) => {
-  db.all(`SELECT * FROM genres WHERE id IN
-  (SELECT DISTINCT genre_id FROM film_genre ORDER BY genre_id ASC)
-  UNION
-  SELECT * FROM genres WHERE id = 0`, (err, rows) => {
-    handleErrors(err);
-    if (rows) {
-      const array = []
-      rows.forEach(row => array.push(row.genre))
-      response.send(array);
-    } else {
-      response.send(rows);
-    }
-  });
-};
-*/
 
 export const getGenres = (_, response) => {
   db.all(`SELECT * FROM genres WHERE id IN
