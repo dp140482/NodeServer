@@ -172,7 +172,8 @@ export const  getGenres = (_, response) => {
       const array = []
       rows.forEach(row => array.push(row.genre))
       response.send(array);
+    } else {
+      response.send(rows);
     }
-    response.send(rows);
   });
 };
