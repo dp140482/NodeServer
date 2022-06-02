@@ -60,12 +60,22 @@ export const getFilms = (req, response) => {
   const order = req.body.order;
   let criterium = order ? order : "rating";
   if (order === "newest") criterium = "add_at";
-  let query = `SELECT image, route, title, rating, agelimit
-  FROM films ORDER BY ${ criterium } DESC`;
-  if (req.body.arrayLength && req.body.arrayLength > 0) {
-    query +=  ` LIMIT ${ req.body.arrayLength };`;
+  let query = '';
+  if (!req.body.page) {
+    query = `SELECT image, route, title, rating, agelimit FROM films ORDER BY ${ criterium } DESC`;
+    if (req.body.arrayLength && req.body.arrayLength > 0) {
+      query +=  ` LIMIT ${ req.body.arrayLength };`;
+    } else {
+      query += ';';
+    }
   } else {
-    query += ';';
+    query = `SELECT image, route, title, rating, agelimit FROM
+    (SELECT * FROM
+      (SELECT * FROM films
+        ORDER BY ${ criterium }
+        DESC LIMIT ${ req.body.arrayLength * req.body.page })
+    ORDER BY ${ criterium } ASC LIMIT ${ req.body.arrayLength })
+    ORDER BY ${ criterium } DESC;`;
   }
   db.all(query, (err, rows) => {
       handleErrors(err);
@@ -110,7 +120,7 @@ export const postComment = (req, response) => {
   );
 };
 
-export const  getComments = (req, response) => {
+export const getComments = (req, response) => {
   db.all(
     `SELECT * FROM comments WHERE film_route = ?`, req.params.route,
     (err, rows) => {
@@ -120,7 +130,7 @@ export const  getComments = (req, response) => {
   );
 };
 
-export const  getImage = (req, response) => {
+export const getImage = (req, response) => {
     const filePath = './media/' + req.params.file;
     fs.access(filePath, fs.constants.R_OK, (err) => {
       if (err) {
@@ -132,7 +142,7 @@ export const  getImage = (req, response) => {
     })
 };
 
-export const  getInfo = (req, response) => {
+export const getInfo = (req, response) => {
   const route = req.params.route;
   const filmQuery =  `SELECT * FROM films WHERE route = \"${ route }\"`;
   db.get(filmQuery, (err, rows) => {
@@ -161,6 +171,7 @@ export const  getInfo = (req, response) => {
   });
 };
 
+/*
 export const  getGenres = (_, response) => {
   db.all(`SELECT * FROM genres WHERE id IN
   (SELECT DISTINCT genre_id FROM film_genre ORDER BY genre_id ASC)
@@ -176,8 +187,19 @@ export const  getGenres = (_, response) => {
     }
   });
 };
+*/
 
-export const  getFilmGenres = (req, response) => {
+export const getGenres = (_, response) => {
+  db.all(`SELECT * FROM genres WHERE id IN
+  (SELECT DISTINCT genre_id FROM film_genre ORDER BY genre_id ASC)
+  UNION
+  SELECT * FROM genres WHERE id = 0`, (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  });
+};
+
+export const getFilmGenres = (req, response) => {
   db.all(`SELECT genre FROM genres WHERE id IN
     (SELECT genre_id FROM film_genre
     WHERE route = \"${ req.params.route }\")`, (err, rows) => {
@@ -191,4 +213,21 @@ export const  getFilmGenres = (req, response) => {
     }
   });
 };
+
+export const getNumOfFilms = (req, response) => {
+  const genre_id = req.params.genre_id;
+  if (!genre_id || genre_id === 0) {
+    db.get(`SELECT COUNT(*) AS count FROM films;`, (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    });
+  } else {
+    db.get(`SELECT COUNT(*) AS count FROM films WHERE route IN
+    (SELECT route FROM film_genre WHERE genre_id = \"${ genre_id }\");`, (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    });
+  }
+};
+
 

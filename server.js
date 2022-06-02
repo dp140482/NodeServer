@@ -12,7 +12,8 @@ import {
   getImage,
   getInfo,
   getGenres,
-  getFilmGenres
+  getFilmGenres,
+  getNumOfFilms
 } from './handlers.js';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
@@ -42,6 +43,8 @@ app.post("/get-videos", getVideos); // -- Вернуть первые arrayLengt
 app.get("/get-serials", getSerials); // -- Вернуть все сериалы
 app.get("/get-genres", getGenres); // -- Вернуть все используемые жанры
 app.get("/get-genres/:route", getFilmGenres); // -- Вернуть все жанры видеозаписи
+app.get("/get-number-of-films", getNumOfFilms); // -- Вернуть число фильмов в базе
+app.get("/get-number-of-films/:genre_id", getNumOfFilms); // -- Вернуть число фильмов в базе
 /* Вернуть подробную информацию о фильме, сериале или видео: */
 app.get("/get-videocontent-info/:route", getInfo);
 app.post("/get-episodes", () => {}); // -- Вернуть список эпизодов сезона сериала
