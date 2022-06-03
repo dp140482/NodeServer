@@ -55,7 +55,7 @@ CREATE TABLE episodes (
 
 DROP TABLE IF EXISTS genres;
 CREATE TABLE genres (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY,
     genre TEXT NOT NULL
 );
 
@@ -81,13 +81,13 @@ CREATE TABLE persona (
 DROP TABLE IF EXISTS film_director;
 CREATE TABLE film_director (
     film_route TEXT NOT NULL,
-    person_id INTEGER NOT NULL
+    person_route TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS film_actor;
 CREATE TABLE film_actor (
     film_route TEXT NOT NULL,
-    person_id INTEGER NOT NULL
+    person_route TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS comments;
@@ -218,3 +218,9 @@ INSERT INTO film_genre (route, genre_id) VALUES ('game_of_thrones', 6);
 INSERT INTO film_genre (route, genre_id) VALUES ('game_of_thrones', 4);
 INSERT INTO film_genre (route, genre_id) VALUES ('doctor_house', 6);
 INSERT INTO film_genre (route, genre_id) VALUES ('doctor_house', 26);
+
+INSERT INTO film_director (film_route, person_route) VALUES ('matrix', 'lana_wachowski');
+INSERT INTO film_director (film_route, person_route) VALUES ('matrix', 'lilly_wachowski');
+
+INSERT INTO film_actor (film_route, person_route) VALUES ('matrix', 'keanu_reeves');
+INSERT INTO film_actor (film_route, person_route) VALUES ('matrix', 'carrie-anne_moss');

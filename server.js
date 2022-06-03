@@ -13,7 +13,9 @@ import {
   getInfo,
   getGenres,
   getFilmGenres,
-  getNumOfFilms
+  getNumOfFilms,
+  getDirectors,
+  getActors
 } from './handlers.js';
 
 const app = express();
@@ -43,6 +45,8 @@ app.get("/get-number-of-films", getNumOfFilms); // -- Вернуть число 
 app.get("/get-number-of-films/:genre_id", getNumOfFilms); // -- Вернуть число фильмов в базе
 /* Вернуть подробную информацию о фильме, сериале или видео: */
 app.get("/get-videocontent-info/:route", getInfo);
+app.get("/get-directors/:route", getDirectors);  // -- Вернуть список директоров фильма
+app.get("/get-actors/:route", getActors);  // -- Вернуть список актёров фильма
 app.post("/get-episodes", () => {}); // -- Вернуть список эпизодов сезона сериала
 app.get("/get-person/:route", getPerson); // -- Вернуть подробную информацию о человеке
 app.get("/get-comments/:route", getComments); // -- Вернуть список комментариев

@@ -222,4 +222,19 @@ export const getNumOfFilms = (req, response) => {
   }
 };
 
+export const getDirectors = (req, response) => {
+  db.all(`SELECT name, route FROM persona WHERE route IN
+  (SELECT person_route FROM film_director WHERE film_route = \"${ req.params.route }\")`, (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  });
+};
+
+export const getActors = (req, response) => {
+  db.all(`SELECT name, route FROM persona WHERE route IN
+  (SELECT person_route FROM film_actor WHERE film_route = \"${ req.params.route }\")`, (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  });
+};
 
