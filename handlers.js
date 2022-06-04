@@ -19,7 +19,7 @@ export const handleErrors = (err) => {
 };
 
 export const getPerson = (req, response) => {
-  db.all(
+  db.get(
     `SELECT * FROM persona WHERE route = ?`,
     req.params.route,
     (err, rows) => {
@@ -258,4 +258,12 @@ export const getNews = (_, response) => {
       response.send(rows);
     }
   );
+};
+
+export const goSearch = (req, response) => {
+  const sstr = req.body.searchString;
+  db.all(`SELECT * FROM films WHERE title LIKE '%${sstr}%'`, (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  });
 };

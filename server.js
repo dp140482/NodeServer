@@ -17,6 +17,7 @@ import {
   getDirectors,
   getActors,
   getNews,
+  goSearch,
 } from './handlers.js';
 
 const app = express();
@@ -53,6 +54,7 @@ app.post("/get-episodes", () => {}); // -- Вернуть список эпиз�
 app.get("/get-person/:route", getPerson); // -- Вернуть подробную информацию о человеке
 app.get("/get-comments/:route", getComments); // -- Вернуть список комментариев
 app.post("/post-comment", postComment); // -- Отправить комментарий
+app.post("/go-search", goSearch); // -- Поиск видеозаписи по названию
 app.get("/refresh-rating/:route", () => {}); // -- Обновить рейтинг фильма
 app.post("/login", () => {}); // -- Вход пользователя
 app.get("/logout", () => {}); // -- Выход зарегистрированного
