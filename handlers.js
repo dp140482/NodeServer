@@ -244,3 +244,13 @@ export const getActors = (req, response) => {
   });
 };
 
+export const getNews = (_, response) => {
+  db.all(
+    `SELECT route, image, title, description, created_date
+    FROM news `,
+    (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    }
+  );
+};
