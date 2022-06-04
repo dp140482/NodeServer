@@ -15,7 +15,8 @@ import {
   getFilmGenres,
   getNumOfFilms,
   getDirectors,
-  getActors
+  getActors,
+  getNews,
 } from './handlers.js';
 
 const app = express();
@@ -56,6 +57,7 @@ app.get("/refresh-rating/:route", () => {}); // -- Обновить рейтин
 app.post("/login", () => {}); // -- Вход пользователя
 app.get("/logout", () => {}); // -- Выход зарегистрированного
 app.post("/signin", () => {}); // -- Регистрация пользователя
+app.get("/get-news", getNews); // -- Вернуть все новости
 
 const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Сервер работает на порте ${port}...`));
