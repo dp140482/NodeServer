@@ -99,7 +99,6 @@ export const getFilms = (req, response) => {
 
 export const getVideoContent = (req, response) => {
   const criterium = getCriterium(req);
-  console.log(criterium);
   const query = `SELECT image, route, title, rating, agelimit, add_at FROM films
   UNION
   SELECT image, route, title, rating, agelimit, add_at FROM videos
@@ -187,9 +186,15 @@ export const getInfo = (req, response) => {
   });
 };
 
-export const getGenres = (_, response) => {
+export const getGenres = (req, response) => {
+  const type = req.body.contentType;
+  let table = 'films'
+  if (type === 'serial') table = 'serials';
+  if (type === 'video') table = 'videos';
   db.all(`SELECT * FROM genres WHERE id IN
-  (SELECT DISTINCT genre_id FROM film_genre ORDER BY genre_id ASC)
+  (SELECT DISTINCT genre_id FROM film_genre WHERE route IN
+  (SELECT route FROM ${table})
+  ORDER BY genre_id ASC)
   UNION
   SELECT * FROM genres WHERE id = 0`, (err, rows) => {
     handleErrors(err);

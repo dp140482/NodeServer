@@ -39,7 +39,7 @@ app.post("/get-videocontent", getVideoContent); // -- Вернуть все фи
 app.post("/get-films", getFilms); // -- Вернуть первые arrayLength фильмов в порядке order
 app.post("/get-videos", getVideos); // -- Вернуть первые arrayLength видео в порядке order
 app.get("/get-serials", getSerials); // -- Вернуть все сериалы
-app.get("/get-genres", getGenres); // -- Вернуть все используемые жанры
+app.post("/get-genres", getGenres); // -- Вернуть все используемые жанры
 app.get("/get-genres/:route", getFilmGenres); // -- Вернуть все жанры видеозаписи
 app.get("/get-number-of-films", getNumOfFilms); // -- Вернуть число фильмов в базе
 app.get("/get-number-of-films/:genre_id", getNumOfFilms); // -- Вернуть число фильмов в базе
