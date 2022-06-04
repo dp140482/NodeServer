@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 app.get("/", getIndex); // -- Вернуть  index.html (фронт)
 app.get("/images/:file", getImage) // -- Вернуть картинку из папки media по имени файла
-app.get("/get-videocontent", getVideoContent); // -- Вернуть все фильмы, сериалы и видео
+app.post("/get-videocontent", getVideoContent); // -- Вернуть все фильмы, сериалы и видео
 app.post("/get-films", getFilms); // -- Вернуть первые arrayLength фильмов в порядке order
 app.post("/get-videos", getVideos); // -- Вернуть первые arrayLength видео в порядке order
 app.get("/get-serials", getSerials); // -- Вернуть все сериалы

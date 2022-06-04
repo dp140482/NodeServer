@@ -1,7 +1,6 @@
 import fs from 'fs';
 import {db} from './db.js';
 import date from 'date-and-time';
-// import {createDatabase} from './mutations.js'
 
 export const getIndex = (_, res) => {
   fs.readFile("index.html", "utf-8", (error, data) => {
@@ -56,10 +55,15 @@ export const getSerials = (_, response) => {
   );
 };
 
-export const getFilms = (req, response) => {
+function getCriterium(req) {
   const order = req.body.order;
   let criterium = order ? order : "rating";
   if (order === "newest") criterium = "add_at";
+  return criterium;
+}
+
+export const getFilms = (req, response) => {
+  const criterium = getCriterium(req);
   let query = '';
   if (!req.body.page) {
     query = `SELECT image, route, title, rating, agelimit FROM films ORDER BY ${ criterium } DESC`;
@@ -93,15 +97,17 @@ export const getFilms = (req, response) => {
   });
 };
 
-export const getVideoContent = (_, response) => {
-  db.all(
-    `SELECT image, route, title, rating, agelimit FROM films
-    UNION
-    SELECT image, route, title, rating, agelimit FROM videos
-    UNION
-    SELECT image, route, title, rating, agelimit FROM serials
-    ORDER BY rating DESC`,
-    (err, rows) => {
+export const getVideoContent = (req, response) => {
+  const criterium = getCriterium(req);
+  console.log(criterium);
+  const query = `SELECT image, route, title, rating, agelimit, add_at FROM films
+  UNION
+  SELECT image, route, title, rating, agelimit, add_at FROM videos
+  UNION
+  SELECT image, route, title, rating, agelimit, add_at FROM serials
+  ORDER BY ${ criterium } DESC
+  LIMIT ${ req.body.arrayLength ? req.body.arrayLength : 12 } `;
+  db.all(query, (err, rows) => {
       handleErrors(err);
       response.send(rows);
     }
