@@ -1,6 +1,7 @@
 import fs from 'fs';
 import {db} from './db.js';
 import date from 'date-and-time';
+import { v4 as uuid } from 'uuid'
 
 export const getIndex = (_, res) => {
   fs.readFile("index.html", "utf-8", (error, data) => {
@@ -267,3 +268,67 @@ export const goSearch = (req, response) => {
     response.send(rows);
   });
 };
+
+export const getUsername = (req, response) => {
+  db.get(`SELECT login FROM users WHERE auth = \"${ req.params.uid }\"`, (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  })
+};
+
+export const signinUser = (req, response) => {
+  const auth = uuid()
+  db.exec(`INSERT INTO users (login, email, password, auth)
+  VALUES ('${ req.body.login }', '${ req.body.email }', '${ req.body.pswd }', '${ auth }')`,
+  err => {
+    if (err) {
+      handleErrors(err);
+      response.send({ error: err });
+    } else {
+      response.send({ auth: auth });
+    }
+  });
+};
+
+export const loginUser = (req, response) => {
+  db.get(`SELECT password FROM users WHERE email = '${ req.body.email }'`, (err, row) => {
+    handleErrors(err);
+    const ps = row ? row.password.substr(64) : ''
+    const recieved_ps = req.body.pswd ? req.body.pswd.substr(64) : undefined
+    if (recieved_ps === ps) {
+      const auth = uuid()
+      db.exec(`UPDATE users SET auth = '${ auth }' WHERE email = '${ req.body.email }'`,
+      err => {
+        if (err) {
+          handleErrors(err);
+          response.send({ error: err });
+        } else {
+          response.send({ auth: auth });
+        }
+      });
+    } else {
+      response.send({ error: 'Неверный адрес электронной почты или пароль' });
+    }
+  })
+};
+
+export const logoutUser = (req, response) => {
+  db.exec(`UPDATE users SET auth = NULL WHERE login = '${ req.params.name }'`,
+  err => {
+    if (err) {
+      handleErrors(err);
+      response.send({ error: err });
+    } else {
+      response.send({ logout: true });
+    }
+  });
+};
+
+export const getAllUsers = (_, response) => {
+  db.all('SELECT * FROM users', (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  })
+}
+
+
