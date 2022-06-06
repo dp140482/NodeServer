@@ -100,11 +100,11 @@ export const getFilms = (req, response) => {
 
 export const getVideoContent = (req, response) => {
   const criterium = getCriterium(req);
-  const query = `SELECT image, route, title, rating, agelimit, add_at FROM films
+  const query = `SELECT image, route, title, rating, agelimit, add_at, poster FROM films
   UNION
-  SELECT image, route, title, rating, agelimit, add_at FROM videos
+  SELECT image, route, title, rating, agelimit, add_at, poster FROM videos
   UNION
-  SELECT image, route, title, rating, agelimit, add_at FROM serials
+  SELECT image, route, title, rating, agelimit, add_at, poster FROM serials
   ORDER BY ${ criterium } DESC
   LIMIT ${ req.body.arrayLength ? req.body.arrayLength : 12 } `;
   db.all(query, (err, rows) => {
