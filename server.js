@@ -18,6 +18,11 @@ import {
   getActors,
   getNews,
   goSearch,
+  getUsername,
+  signinUser,
+  loginUser,
+  logoutUser,
+  getAllUsers,
 } from './handlers.js';
 
 const app = express();
@@ -56,10 +61,12 @@ app.get("/get-comments/:route", getComments); // -- Вернуть список 
 app.post("/post-comment", postComment); // -- Отправить комментарий
 app.post("/go-search", goSearch); // -- Поиск видеозаписи по названию
 app.get("/refresh-rating/:route", () => {}); // -- Обновить рейтинг фильма
-app.post("/login", () => {}); // -- Вход пользователя
-app.get("/logout", () => {}); // -- Выход зарегистрированного
-app.post("/signin", () => {}); // -- Регистрация пользователя
+app.post("/login", loginUser); // -- Вход пользователя
+app.get("/logout/:name", logoutUser); // -- Выход зарегистрированного пользователя
+app.post("/signin", signinUser); // -- Регистрация пользователя
+app.get('/get-username/:uid', getUsername); // -- Вернуть имя пользователя
 app.get("/get-news", getNews); // -- Вернуть все новости
+app.get('/get-allusers', getAllUsers); // -- Вернуть данные всех пользователей
 
 const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Сервер работает на порте ${port}...`));
