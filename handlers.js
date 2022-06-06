@@ -330,5 +330,18 @@ export const getAllUsers = (_, response) => {
     response.send(rows);
   })
 }
+export const getInfoMedia = (req, response) => {
+  const route = req.params.route;
+  const news =  `SELECT * FROM news WHERE route = \"${ route }\"`;
+  db.get(news, (err, rows) => {
+      handleErrors(err);
+      if (rows) {
+        response.send(rows);
+      }else {
+        response.send(undefined);
+      }
+            });
+};
+
 
 

@@ -23,6 +23,7 @@ import {
   loginUser,
   logoutUser,
   getAllUsers,
+  getInfoMedia
 } from './handlers.js';
 
 const app = express();
@@ -67,6 +68,7 @@ app.post("/signin", signinUser); // -- Регистрация пользоват
 app.get('/get-username/:uid', getUsername); // -- Вернуть имя пользователя
 app.get("/get-news", getNews); // -- Вернуть все новости
 app.get('/get-allusers', getAllUsers); // -- Вернуть данные всех пользователей
+app.get("/get-media-info/:route", getInfoMedia);
 
 const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Сервер работает на порте ${port}...`));
