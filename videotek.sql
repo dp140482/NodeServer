@@ -221,6 +221,8 @@ INSERT INTO serials (title, route, description, release_year, last_year, country
 VALUES ('Игра престолов','game_of_thrones','Действие «Игры престолов», основанный на цикле романов «Песнь льда и огня» Джорджа Р. Р. Мартина, происходит в вымышленном мире, напоминающем средневековую Европу. В самом масштабном и обсуждаемом телесериале 2010-х одновременно развиваются три основные истории: борьба нескольких влиятельных домов за Железный Трон Семи Королевств либо за независимость от него; история потомка свергнутой династии правителей, принцессы-изгнанницы, планирующей вернуть престол; сага о древнем братстве, охраняющем государство от угроз с севера. В сериале поднимаются вопросы насилия и гражданской войны, положения женщин и сексуальных меньшинств в обществе, роли Церкви и семьи в системе социальных отношений…', 2011, 2019, 'США, Великобритания', 18, 'got.jpg', 9.0, 'https://www.film.ru/sites/default/files/trailers/1631897/trailer.mp4', '2022-06-04 08:30:00', 'gotposter.jpg');
 INSERT INTO serials (title, route, description, release_year, last_year, country, agelimit, image, rating, trailer, add_at, poster)
 VALUES ('Доктор Хаус','doctor_house', 'Сериал повествует о выдающемся враче-диагносте Грегори Хаусе и его команде, являясь одним из самых популярных произведений в жанре медицинский детектив. Главный герой замкнут, резок и циничен, при этом склонен к бунтарству и не обременяет себя соблюдением правил хорошего тона. Любимое утверждение доктора — «Все лгут». Однако, такого доктора не проведёшь…', 2004, 2012, 'США', 16, 'doctor_house.webp', 7.3, 'https://www.film.ru/sites/default/files/trailers/1627265/House-M-D-Trailer.mp4', '2022-06-04 08:40:00', 'housemdposter.jpg');
+INSERT INTO serials (title, route, description, release_year, last_year, country, agelimit, image, rating, add_at)
+VALUES ('Крот','krtek', 'Рисованный мультсериал, созданный чешским художником Зденеком Милером. Первая серия — «Как Крот штанишки нашёл», созданная по книге чешского писателя Эдуарда Петишки, стала и единственной, в которой использовалась речь персонажей. Во всех последующих сериях персонажам принадлежат в основном лишь междометия, что делает их практически полностью понятными без перевода для зрителя из любой страны мира.', 1957, 2002, 'Чехословакия / Чехия', 0, 'krtek.jpg', 7.9, '2022-06-08 23:00:00');
 
 INSERT INTO persona (name, route, image, birthday, birthplace, biography)
 VALUES ('Киану Ривз', 'keanu_reeves', 'a_keanu_reeves.webp', '1964-09-02', 'Бейрут, Ливан', 'Полное имя — Киану Чарльз Ривз (Keanu Charles Reeves). По-гавайски имя Keanu означает «прохладный ветер над горами». Отец Киану — Сэмуэль Ноулин Ривз — наполовину гаваец, наполовину китаец, а мать — Патрисия Тэйлор — англичанка. Киану — левша. У Киану никогда не было собственного компьютера. Если ему приходится все же общаться с компьютером — он играет в шахматы. Киану не раз утверждал, что его больше интересуют отношения человека и компьютера, нежели сам компьютер как таковой. Киану боится иметь детей, потому что этот мир его часто пугает. Однако он считает, что способен влюбиться до такой степени, когда уже станет все равно, что тебя ждет впереди.');
@@ -602,6 +604,19 @@ INSERT INTO episodes (serial_route, season, ep, title)
 VALUES ('doctor_house', 2, 4, 'Туберкулёз или не туберкулёз?');
 INSERT INTO episodes (serial_route, season, ep, title) 
 VALUES ('doctor_house', 2, 5, 'Папенькин сынок');
+
+INSERT INTO episodes (serial_route, season, ep, title, video) 
+VALUES ('krtek', 1, 1, 'Крот и штанишки',
+'http://localhost:3003/videocontent/01_1957_Крот и штанишки_(Krtek a kalhotkam)(TVRip)(rus).mp4');
+INSERT INTO episodes (serial_route, season, ep, title, video) 
+VALUES ('krtek', 1, 2, 'Крот и автомобильчик',
+'http://localhost:3003/videocontent/02_1963_Крот и автомобильчик_(Krtek a auticko)(ger).mp4');
+INSERT INTO episodes (serial_route, season, ep, title, video) 
+VALUES ('krtek', 1, 3, 'Крот и ракета',
+'http://localhost:3003/videocontent/03_1965_Крот и ракета_(Krtek a raketa)(ger).mp4');
+INSERT INTO episodes (serial_route, season, ep, title, video) 
+VALUES ('krtek', 1, 4, 'Крот и радио',
+'http://localhost:3003/videocontent/04_1968_Крот и радио_(Krtek a tranzistor)(ger).mp4');
 
 INSERT INTO film_director (film_route, person_route) VALUES ('matrix', 'lana_wachowski');
 INSERT INTO film_director (film_route, person_route) VALUES ('matrix', 'lilly_wachowski');
