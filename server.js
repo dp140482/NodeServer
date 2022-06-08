@@ -23,7 +23,9 @@ import {
   loginUser,
   logoutUser,
   getAllUsers,
-  getInfoMedia
+  getInfoMedia,
+  getArticles,
+  getVideo,
 } from './handlers.js';
 
 const app = express();
@@ -69,6 +71,8 @@ app.get('/get-username/:uid', getUsername); // -- Вернуть имя поль
 app.get("/get-news", getNews); // -- Вернуть все новости
 app.get('/get-allusers', getAllUsers); // -- Вернуть данные всех пользователей
 app.get("/get-media-info/:route", getInfoMedia);
+app.get("/get-articles", getArticles); // -- Вернуть все статьи
+app.get("/get-video", getVideo); // -- Вернуть все видео
 
 const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Сервер работает на порте ${port}...`));

@@ -2,6 +2,7 @@ import fs from 'fs';
 import {db} from './db.js';
 import date from 'date-and-time';
 import { v4 as uuid } from 'uuid'
+import { response } from 'express';
 
 export const getIndex = (_, res) => {
   fs.readFile("index.html", "utf-8", (error, data) => {
@@ -330,6 +331,7 @@ export const getAllUsers = (_, response) => {
     response.send(rows);
   })
 }
+
 export const getInfoMedia = (req, response) => {
   const route = req.params.route;
   const news =  `SELECT * FROM news WHERE route = \"${ route }\"`;
@@ -338,10 +340,39 @@ export const getInfoMedia = (req, response) => {
       if (rows) {
         response.send(rows);
       }else {
+        const articles = `SELECT * FROM articles WHERE route = \"${ route }\"`
+        db.get(articles, (err,rows) => {
+          handleErrors(err);
+      if (rows) {
+        response.send(rows);
+      }else {
         response.send(undefined);
       }
-            });
+        });
+      }
+   });
 };
+
+export const getArticles = (_,response) => {
+  db.all(
+    `SELECT route, image, title, description, created_date
+  FROM articles `,
+  (err, rows) => {
+    handleErrors(err);
+    response.send(rows);
+  }
+  );
+};
+
+export const getVideo = (_,response) => {
+  db.all(
+    `SELECT * FROM videos`,
+    (err,rows) =>{
+      handleErrors(err);
+      response.send(rows);
+    }
+  )
+}
 
 
 
