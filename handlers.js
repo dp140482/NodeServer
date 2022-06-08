@@ -2,7 +2,6 @@ import fs from 'fs';
 import {db} from './db.js';
 import date from 'date-and-time';
 import { v4 as uuid } from 'uuid'
-import { response } from 'express';
 
 export const getIndex = (_, res) => {
   fs.readFile("index.html", "utf-8", (error, data) => {
@@ -148,7 +147,7 @@ export const getComments = (req, response) => {
 };
 
 export const getImage = (req, response) => {
-    const filePath = './media/' + req.params.file;
+    const filePath = './img/' + req.params.file;
     fs.access(filePath, fs.constants.R_OK, (err) => {
       if (err) {
         response.statusCode = 404;
@@ -157,6 +156,18 @@ export const getImage = (req, response) => {
         fs.createReadStream(filePath).pipe(response);
       }
     })
+};
+
+export const getVideoFile = (req, response) => {
+  const filePath = './video/' + req.params.file;
+  fs.access(filePath, fs.constants.R_OK, (err) => {
+    if (err) {
+      response.statusCode = 404;
+      response.end('File not found');
+    } else {
+      fs.createReadStream(filePath).pipe(response);
+    }
+  })
 };
 
 export const getInfo = (req, response) => {
@@ -363,16 +374,6 @@ export const getArticles = (_,response) => {
   }
   );
 };
-
-export const getVideo = (_,response) => {
-  db.all(
-    `SELECT * FROM videos`,
-    (err,rows) =>{
-      handleErrors(err);
-      response.send(rows);
-    }
-  )
-}
 
 
 

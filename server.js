@@ -25,7 +25,7 @@ import {
   getAllUsers,
   getInfoMedia,
   getArticles,
-  getVideo,
+  getVideoFile
 } from './handlers.js';
 
 const app = express();
@@ -44,7 +44,8 @@ app.use((req, res, next) => {
 });
 
 app.get("/", getIndex); // -- Вернуть  index.html (фронт)
-app.get("/images/:file", getImage) // -- Вернуть картинку из папки media по имени файла
+app.get("/images/:file", getImage) // -- Вернуть картинку из папки img по имени файла
+app.get("/videocontent/:file", getVideoFile) // -- Вернуть видеозапись из папки video по имени файла
 app.post("/get-videocontent", getVideoContent); // -- Вернуть все фильмы, сериалы и видео
 app.post("/get-films", getFilms); // -- Вернуть первые arrayLength фильмов в порядке order
 app.post("/get-videos", getVideos); // -- Вернуть первые arrayLength видео в порядке order
@@ -72,7 +73,6 @@ app.get("/get-news", getNews); // -- Вернуть все новости
 app.get('/get-allusers', getAllUsers); // -- Вернуть данные всех пользователей
 app.get("/get-media-info/:route", getInfoMedia);
 app.get("/get-articles", getArticles); // -- Вернуть все статьи
-app.get("/get-video", getVideo); // -- Вернуть все видео
 
 const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Сервер работает на порте ${port}...`));
