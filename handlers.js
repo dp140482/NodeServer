@@ -375,5 +375,16 @@ export const getArticles = (_,response) => {
   );
 };
 
+export const getSeasonsNumber = (req,response) => {
+  db.get(
+    `SELECT max(season) as count FROM episodes WHERE serial_route = '${ req.params.route }'`,
+    (err, num) => {
+      handleErrors(err);
+      response.send(num);
+    }
+  );
+};
+
+
 
 

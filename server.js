@@ -25,7 +25,8 @@ import {
   getAllUsers,
   getInfoMedia,
   getArticles,
-  getVideoFile
+  getVideoFile,
+  getSeasonsNumber
 } from './handlers.js';
 
 const app = express();
@@ -58,7 +59,7 @@ app.get("/get-number-of-films/:genre_id", getNumOfFilms); // -- Вернуть �
 app.get("/get-videocontent-info/:route", getInfo);
 app.get("/get-directors/:route", getDirectors);  // -- Вернуть список директоров фильма
 app.get("/get-actors/:route", getActors);  // -- Вернуть список актёров фильма
-app.get("/get-seasons-number", () => {}); // -- Вернуть число сезонов сериала
+app.get("/get-seasons-number/:route", getSeasonsNumber); // -- Вернуть число сезонов сериала
 app.post("/get-episodes", () => {}); // -- Вернуть список эпизодов сезона сериала
 app.get("/get-person/:route", getPerson); // -- Вернуть подробную информацию о человеке
 app.get("/get-comments/:route", getComments); // -- Вернуть список комментариев

@@ -55,7 +55,7 @@ CREATE TABLE episodes (
     title TEXT,
     ep INTEGER NOT NULL,
     season INTEGER NOT NULL,
-    serial_route INTEGER NOT NULL,
+    serial_route TEXT NOT NULL,
     video TEXT
 );
 
