@@ -385,6 +385,16 @@ export const getSeasonsNumber = (req,response) => {
   );
 };
 
+export const getEpisodes = (req,response) => {
+  db.all(
+    `SELECT * FROM episodes
+    WHERE serial_route = '${ req.body.route }' AND season = '${ req.body.season }'`,
+    (err, rows) => {
+      handleErrors(err);
+      response.send(rows);
+    }
+  );
+};
 
 
 
